@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banking-mongo
+  template:
+    metadata:
+      labels:
+        app: banking-mongo
+    spec:
+      containers:
+        - name: banking-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-mongo-srv
+spec:
+  selector:
+    app: banking-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
